@@ -7,15 +7,11 @@ import (
 
 func ErrorHandler(ctx *fiber.Ctx, err error) error {
 
-	// message := err.Error()
-	// logStop := util.LogResponse(ctx, message, "")
-	// fmt.Println(logStop)
-
 	_, databaseError := err.(DatabaseError)
 	if databaseError {
 		return ctx.Status(500).JSON(model.GeneralResponse{
 			StatusCode: 500,
-			Message:    "Terjadi kesalahan, silahkan ulangi beberapa saat lagi, code=[001]",
+			Message:    "Terjadi kesalahan, silahkan ulangi beberapa saat lagi",
 		})
 	}
 
@@ -37,7 +33,6 @@ func ErrorHandler(ctx *fiber.Ctx, err error) error {
 
 	return ctx.Status(400).JSON(model.GeneralResponse{
 		StatusCode: 400,
-		// Message:    "Terjadi kesalahan, silahkan ulangi beberapa saat lagi, code=[002]",
-		Message: err.Error(),
+		Message:    err.Error(),
 	})
 }

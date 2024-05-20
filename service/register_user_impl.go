@@ -22,6 +22,10 @@ type companyEmployeeUserImpl struct {
 
 func (service *companyEmployeeUserImpl) UserRegister(ctx *fiber.Ctx, params *request.UserRequest) (*fiber.Map, error) {
 	var result *fiber.Map
+	if params.Password == "" || params.Email == "" || params.Data.RoleUser == "" || params.Data.CompanyId == "" {
+		message := "kolom permintaan tidak boleh kosong"
+		return nil, errors.New(message)
+	}
 
 	getEmailRequest := &request.GetEmailRequest{
 		Email: params.Email,

@@ -56,6 +56,11 @@ func (service *companyEmployeeImpl) InsertCompany(ctx *fiber.Ctx, params *reques
 }
 
 func (service *companyEmployeeImpl) AdminApproval(ctx *fiber.Ctx, params *request.ApprovalRequest) (*response.ApprovalResponse, error) {
+	if params.Status == "" || params.EmailUser == "" {
+		message := "kolom permintaan tidak boleh kosong"
+		return nil, errors.New(message)
+	}
+
 	resData, err := service.CompanyEmployeeUserRepository.GetCompanyId(ctx, params.Id)
 	if err != nil {
 		logging.Logging(ctx, constant.ERROR_LOAD_DATA, constant.FuncApproval, "0010", "", "0000", err.Error())
